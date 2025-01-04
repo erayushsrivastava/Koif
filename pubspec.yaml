@@ -1,0 +1,49 @@
+name: koif
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  #amplify_flutter: ^2.5.0
+  #amplify_auth_cognito: ^2.5.0
+  #amplify_flutter: ^2.5.0 
+  google_nav_bar: ^5.0.7
+  cupertino_icons: ^1.0.8
+  http: ^1.2.2
+  amazon_s3_cognito: ^0.8.1
+  image_picker: ^1.1.2
+  #flutter_dotenv: ^5.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/logo.png
+    - assets/images/frontpage.png
+    - assets/images/avatar_chair.png
+    - assets/images/googleLogo.png
+    - assets/images/salon_image.png
+    - assets/images/home.png
+    - assets/images/hair_cut.png
+    - assets/images/beard.png
+    - assets/images/spa.png
+    - assets/images/skin_care.png
+    - assets/images/hair_color.png
+    - assets/images/mani_pedi.png
+    - assets/images/salon1.webp
+    - assets/images/salon2.jpeg
+    - assets/images/salon3.webp
+    - assets/images/salon4.jpeg
+    - .env
