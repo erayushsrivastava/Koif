@@ -113,7 +113,7 @@ class LoginScreen extends StatelessWidget {
                   // Navigate to CustomerDashboard when the "Continue with Phone" button is pressed
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => CustomerDashboard()),
+                    MaterialPageRoute(builder: (context) => CredentialsScreen()),
                   );
                 },
                 icon: Icon(Icons.phone, color: Colors.white),
