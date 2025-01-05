@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'barberBuddiesDashboard.dart';
 import 'BookingsBarberBuddies.dart';
-import 'ProfileBarberBuddies.dart';
+import 'profileBarberBuddies.dart'; 
 
 class BarberBuddiesNavBar extends StatelessWidget {
   final int selectedIndex;
