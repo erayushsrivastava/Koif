@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:koif/Front-end/customerDashboard.dart'; // Import the CustomerDashboard
-//import 'package:koif/main.dart'; // Import your main.dart to access the signInWithGoogle function
+import 'package:koif/main.dart';
+import 'package:koif/credentials.dart';// 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
