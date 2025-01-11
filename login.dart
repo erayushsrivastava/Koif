@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:koif/Front-end/register.dart';
+import 'package:koif/Front-end/phone_login.dart';
+import 'package:koif/Front-end/customerDashboard.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -6,317 +10,248 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isLogin = true;
-  bool showLoginWithGoogle = false;
-  bool showLoginWithPhone = false;
-  bool showSignUpWithGoogle = false;
-  bool showSignUpWithPhone = false;
+  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF8DA9C4),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 40),
+            // User Icon Section
             Center(
               child: Column(
                 children: [
-                  Image.asset(
-                    'assets/images/logo.png', // Logo
-                    height: 150,
+                  Icon(
+                    Icons.person_outline,
+                    size: 72,
+                    color: Colors.grey[700],
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 16),
                   Text(
-                    'Welcome!',
+                    'Welcome back',
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Please enter your details to login.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[600],
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            // Toggle between Login and Signup
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isLogin = true;
-                      resetDropdownStates();
-                    });
-                  },
-                  child: Column(
-                    children: [
-                      Text(
-                        'LOG IN',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: isLogin ? Colors.orange : Colors.white70,
-                        ),
-                      ),
-                      if (isLogin)
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          height: 3,
-                          width: 60,
-                          color: Colors.orange,
-                        ),
-                    ],
-                  ),
+            SizedBox(height: 32),
+
+            // Email Input
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Email',
+                hintText: 'hello@domain.com',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                GestureDetector(
-                  onTap: () {
+              ),
+            ),
+            SizedBox(height: 16),
+
+            // Password Input
+            TextField(
+              obscureText: _obscurePassword,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () {
                     setState(() {
-                      isLogin = false;
-                      resetDropdownStates();
+                      _obscurePassword = !_obscurePassword;
                     });
                   },
-                  child: Column(
-                    children: [
-                      Text(
-                        'SIGN UP',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: !isLogin ? Colors.orange : Colors.white70,
-                        ),
-                      ),
-                      if (!isLogin)
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          height: 3,
-                          width: 60,
-                          color: Colors.orange,
-                        ),
-                    ],
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+
+            // Forgot Password
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    // Handle Forgot Password
+                  },
+                  child: Text(
+                    'Forgot password?',
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            // Login and Signup Sections
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    if (isLogin) ...[
-                      // Login with Google
-                      buildCustomExpansionTile(
-                        title: 'Login with Google',
-                        isExpanded: showLoginWithGoogle,
-                        onExpansionChanged: (expanded) {
-                          setState(() {
-                            showLoginWithGoogle = expanded;
-                          });
-                        },
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            onPressed: () {
-                              // Login with Google functionality
-                            },
-                            child: Text(
-                              "Login with Google",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // Login with Phone
-                      buildCustomExpansionTile(
-                        title: 'Login with Phone',
-                        isExpanded: showLoginWithPhone,
-                        onExpansionChanged: (expanded) {
-                          setState(() {
-                            showLoginWithPhone = expanded;
-                          });
-                        },
-                        children: [
-                          customTextField(
-                            labelText: "Phone Number",
-                            keyboardType: TextInputType.phone,
-                          ),
-                          SizedBox(height: 10),
-                          customTextField(
-                            labelText: "OTP",
-                            keyboardType: TextInputType.number,
-                          ),
-                          SizedBox(height: 20),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            onPressed: () {
-                              // Login with Phone functionality
-                            },
-                            child: Text(
-                              "Login with Phone",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ] else ...[
-                      // Sign Up with Google
-                      buildCustomExpansionTile(
-                        title: 'Sign up with Google',
-                        isExpanded: showSignUpWithGoogle,
-                        onExpansionChanged: (expanded) {
-                          setState(() {
-                            showSignUpWithGoogle = expanded;
-                          });
-                        },
-                        children: [
-                          customTextField(
-                            labelText: "Email Address",
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                          SizedBox(height: 10),
-                          customTextField(
-                            labelText: "Full Name",
-                            keyboardType: TextInputType.text,
-                          ),
-                          SizedBox(height: 10),
-                          customTextField(
-                            labelText: "Create Password",
-                            obscureText: true,
-                          ),
-                          SizedBox(height: 20),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            onPressed: () {
-                              // Sign up with Google functionality
-                            },
-                            child: Text(
-                              "Sign up with Google",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // Sign Up with Phone
-                      buildCustomExpansionTile(
-                        title: 'Sign up with Phone',
-                        isExpanded: showSignUpWithPhone,
-                        onExpansionChanged: (expanded) {
-                          setState(() {
-                            showSignUpWithPhone = expanded;
-                          });
-                        },
-                        children: [
-                          customTextField(
-                            labelText: "Name",
-                            keyboardType: TextInputType.text,
-                          ),
-                          SizedBox(height: 10),
-                          customTextField(
-                            labelText: "Phone Number",
-                            keyboardType: TextInputType.phone,
-                          ),
-                          SizedBox(height: 10),
-                          customTextField(
-                            labelText: "OTP",
-                            keyboardType: TextInputType.number,
-                          ),
-                          SizedBox(height: 20),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            onPressed: () {
-                              // Sign up with Phone functionality
-                            },
-                            child: Text(
-                              "Sign up with Phone",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ],
+
+            // Remember Me and Login Button
+            Row(
+              children: [
+                Checkbox(
+                  value: true,
+                  onChanged: (value) {},
+                ),
+                Text('Remember me')
+              ],
+            ),
+
+            // Login Button
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CustomerDashboard(),
+      ),
+    );
+
+                // Handle Login
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                padding: EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text(
+                'Login',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
                 ),
               ),
             ),
+            SizedBox(height: 16),
+
+            // OR Divider
+            Row(
+              children: [
+                Expanded(child: Divider(color: Colors.grey[400])),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    'OR',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ),
+                Expanded(child: Divider(color: Colors.grey[400])),
+              ],
+            ),
+            SizedBox(height: 16),
+
+            // Social Login Buttons
+            ElevatedButton.icon(
+              onPressed: () {
+                // Handle Login with Google
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                side: BorderSide(color: Colors.grey[300]!),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              icon: Image.asset(
+                'assets/images/googleLogo.png',
+                height: 24,
+                width: 24,
+              ),
+              label: Text(
+                'Login with Google',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+
+            ElevatedButton.icon(
+              onPressed: () {
+                // Navigate to PhoneLoginScreen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PhoneLoginScreen()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                side: BorderSide(color: Colors.grey[300]!),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              icon: Icon(
+                Icons.phone,
+                color: Colors.black,
+              ),
+              label: Text(
+                'Login with Phone',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            SizedBox(height: 32),
+
+            // Register/Signup Flow
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Don\'t have an account? '),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to Register/Sign Up
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterScreen()),
+                    );
+                  },
+                  child: Text(
+                    'Register',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
-        ),
-      ),
-    );
-  }
-
-  // Function to reset dropdown states
-  void resetDropdownStates() {
-    showLoginWithGoogle = false;
-    showLoginWithPhone = false;
-    showSignUpWithGoogle = false;
-    showSignUpWithPhone = false;
-  }
-
-  // Custom ExpansionTile builder
-  Widget buildCustomExpansionTile({
-    required String title,
-    required bool isExpanded,
-    required Function(bool) onExpansionChanged,
-    required List<Widget> children,
-  }) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: ExpansionTile(
-        title: Text(
-          title,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.white,
-        children: children,
-        onExpansionChanged: onExpansionChanged,
-        trailing: Icon(
-          isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-          color: Colors.orange,
-        ),
-      ),
-    );
-  }
-
-  // Custom TextField builder
-  Widget customTextField({
-    required String labelText,
-    TextInputType? keyboardType,
-    bool obscureText = false,
-  }) {
-    return TextField(
-      keyboardType: keyboardType,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        labelText: labelText,
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );
