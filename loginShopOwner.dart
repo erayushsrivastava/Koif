@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:koif/Front-end/register.dart';
-import 'package:koif/Front-end/phone_login.dart';
-import 'package:koif/Front-end/customerDashboard.dart';
+import 'shopOwnerDashboard.dart';
+import 'phone_login.dart';
+import 'register.dart'; // Import the Register screen
 
-class LoginScreen extends StatelessWidget {
+class LoginShopOwner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,18 +24,18 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // User Icon Section
+            // Header Section
             Center(
               child: Column(
                 children: [
                   Icon(
-                    Icons.person_outline,
+                    Icons.store_mall_directory_outlined,
                     size: 72,
                     color: Colors.grey[700],
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'Welcome Back!',
+                    'Login as Salon Stars',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -57,7 +57,10 @@ class LoginScreen extends StatelessWidget {
             // Login with Google
             ElevatedButton.icon(
               onPressed: () {
-                // Handle Login with Google functionality here
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => ShopOwnerDashboard()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
@@ -84,7 +87,6 @@ class LoginScreen extends StatelessWidget {
             // Login with Phone
             ElevatedButton.icon(
               onPressed: () {
-                // Navigate to PhoneLoginScreen
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PhoneLoginScreen()),
@@ -118,7 +120,6 @@ class LoginScreen extends StatelessWidget {
                 Text('Don\'t have an account? '),
                 GestureDetector(
                   onTap: () {
-                    // Navigate to Register/Sign Up
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => RegisterScreen()),
